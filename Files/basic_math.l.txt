@@ -1,0 +1,30 @@
+%{
+#include <stdio.h>
+int a, b;
+char op;
+%}
+
+%%
+
+[0-9]+[\+\-\*/][0-9]+ {
+    sscanf(yytext, "%d%c%d", &a, &op, &b);
+
+    switch(op) {
+        case '+': printf("Result = %d\n", a + b); break;
+        case '-': printf("Result = %d\n", a - b); break;
+        case '*': printf("Result = %d\n", a * b); break;
+        case '/': printf("Result = %d\n", a / b); break;
+    }
+}
+
+.+ { printf("Invalid expression\n"); }
+
+%%
+
+int yywrap() { return 1; }
+
+int main() {
+    printf("Enter expression (e.g., 5+3): ");
+    yylex();
+    return 0;
+}

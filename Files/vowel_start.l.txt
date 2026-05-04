@@ -1,0 +1,18 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+
+^[aeiouAEIOU][a-zA-Z]*   { printf("Starts with vowel\n"); }
+.+                       { printf("Does not start with vowel\n"); }
+
+%%
+
+int yywrap() { return 1; }
+
+int main() {
+    printf("Enter string: ");
+    yylex();
+    return 0;
+}

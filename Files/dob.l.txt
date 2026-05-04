@@ -1,0 +1,32 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+int day, month, year;
+%}
+
+%%
+
+(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-[0-9]{4} {
+    
+    sscanf(yytext, "%d-%d-%d", &day, &month, &year);
+
+    if(year <= 2026)
+        printf("Valid DOB\n");
+    else
+        printf("Invalid DOB (Year > 2026)\n");
+}
+
+.+ {
+    printf("Invalid DOB\n");
+}
+
+%%
+
+int yywrap() { return 1; }
+
+int main() {
+    printf("Enter DOB (DD-MM-YYYY): ");
+    yylex();
+    return 0;
+}
